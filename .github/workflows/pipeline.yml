@@ -46,3 +46,4 @@ jobs:
           major_version: 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: true
