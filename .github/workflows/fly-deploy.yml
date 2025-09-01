@@ -34,7 +34,9 @@ jobs:
             -d '{
               "embeds": [
                 {
-                  "title": "A new version of Pokedek deployed",
+                  "title": "A new version of Pokedek deployed"
+                },
+                {
                   "description": "to https://peogway-pokedex.fly.dev/ by '"${{ github.actor }}"'\nSeverity: Informational ● '"$TIME"'",
                   "color": 3066993
                 }
@@ -49,7 +51,9 @@ jobs:
             -d '{
               "embeds": [
                 {
-                  "title": "Build failed",
+                  "title": "Build failed"
+                },
+                {
                   "description": "Commit: ${{ github.event.repository.html_url }}/commit/${{ github.sha }} by '"${{ github.actor }}"' broke the build :(\nSeverity: Error ● '"$TIME"'",
                   "color": 15158332
                 }
