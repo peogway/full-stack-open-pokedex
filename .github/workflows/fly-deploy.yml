@@ -25,16 +25,14 @@ jobs:
 
       - name: Notify success
         if: success()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          description: '✅ A new version of Pokedek deployed to https://peogway-pokedex.fly.dev/ by ${{ github.actor }}'
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\": \"✅ A new version of Pokedek deployed to https://peogway-pokedex.fly.dev/ by ${{ github.actor }}\"}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Notify failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          description: "❌ Build failed\nCommit: ${{ github.event.repository.html_url }}/commit/${{ github.sha }}\nBy: ${{ github.actor }}"
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\": \"❌ Build failed\nCommit: ${{ github.event.repository.html_url }}/commit/${{ github.sha }}\nBy: ${{ github.actor }}\"}" \
+          ${{ secrets.DISCORD_WEBHOOK }}
