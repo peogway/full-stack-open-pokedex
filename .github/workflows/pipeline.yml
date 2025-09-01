@@ -33,28 +33,6 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
 
-      - name: Notify success
-        if: success()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          description: |
-            ✅ A new version was deployed
-            Commit by ${{ github.actor }}
-            ${{ github.event.repository.html_url }}
-
-      - name: Notify failure
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          description: |
-            ❌ Build failed
-            Commit: [${{ github.sha }}](${{ github.event.repository.html_url }}/commit/${{ github.sha }})
-            By: ${{ github.actor }}
-
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
