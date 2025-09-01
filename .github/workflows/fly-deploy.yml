@@ -13,7 +13,7 @@ jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    concurrency: deploy-group
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
     steps:
       - uses: actions/checkout@v4
@@ -24,25 +24,25 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Notify success
-          if: success()
-          run: |
-            TIME=$(date +"%b %-d, %Y %-I:%M %p") 
-            curl -H "Content-Type: application/json" \
+        if: success()
+        run: |
+          TIME=$(date +"%b %-d, %Y %-I:%M %p") 
+          curl -H "Content-Type: application/json" \
             -d '{
               "embeds": [
                 {
                   "title": "A new version of Pokedek deployed",
-                  "description": "to https://peogway-pokedex.fly.dev/ by '"${{ github.actor }}"'\nSeverity: Informational ● At'"$TIME"'",
+                  "description": "to https://peogway-pokedex.fly.dev/ by '"${{ github.actor }}"'\nSeverity: Informational ● At '"$TIME"'",
                   "color": 3066993
                 }
               ]
             }' ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Notify failure
-          if: failure()
-          run: |
-            TIME=$(date +"%b %-d, %Y %-I:%M %p") 
-            curl -H "Content-Type: application/json" \
+        if: failure()
+        run: |
+          TIME=$(date +"%b %-d, %Y %-I:%M %p") 
+          curl -H "Content-Type: application/json" \
             -d '{
               "embeds": [
                 {
